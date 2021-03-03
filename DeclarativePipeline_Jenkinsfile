@@ -7,7 +7,7 @@ pipeline
         {
             steps
             {
-                git 'https://github.com/selenium-saikrishna/maven.git'
+                git 'https://github.com/AnupamaSoma/maven-project.git'
             }
         }
         stage('ContBuild')
@@ -21,14 +21,14 @@ pipeline
         {
             steps
             {
-                sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war vagrant@10.10.10.32:/var/lib/tomcat7/webapps/qaenv.war'
+                sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war ubuntu@10.10.10.32:/var/lib/tomcat8/webapps/qaenv.war'
             }
         }
         stage('ContTesting')
         {
             steps
             {
-                git 'https://github.com/selenium-saikrishna/TestingOnLinux.git'
+                git 'https://github.com/AnupamaSoma/FunctionalTesting.git'
                 sh 'java -jar  /var/lib/jenkins/workspace/Declarative_Pipeline/testing.jar'
             }
         }
@@ -38,7 +38,7 @@ pipeline
         success
         {
             input message: 'Waiting for approval from DM', submitter: 'Srinivas'
-    sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war vagrant@10.10.10.33:/var/lib/tomcat7/webapps/prodenv.war'
+    sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war ubuntu@10.10.10.33:/var/lib/tomcat8/webapps/prodenv.war'
         }
         failure
         {
