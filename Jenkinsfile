@@ -1,28 +1,21 @@
-node('master')
-{
-    stage('ContinuousDownload') 
-    {
-         git 'https://github.com/AnupamaSoma/maven-project.git'
-    }
-    stage('ContinuousBuild') 
-    {
-         sh label: '', script: 'mvn package'
-    }
-    stage('ContinuousDeployment')
-    {
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.12.49:/var/lib/tomcat8/webapps/testenv.war'
-    }
-    stage('ContinuousTesting')
-    {
+node {
+    stage('continous downlaod') {
+    git 'https://github.com/AnupamaSoma/maven-project.git'
+}
+    stage('continous build') {
+    sh 'mvn package'
+}
+     stage('continous deploy'){
+         deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.81.254:8080')], contextPath: 'testapp', war: '**/*.war'
+         //sh 'java -jar /home/ubuntu/.jenkins/workspace/scriped_pipeline/testing.jar '
+          }
+    stage('continous testing '){
         git 'https://github.com/AnupamaSoma/FunctionalTesting.git'
-        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
+        sh 'java -jar /home/ubuntu/.jenkins/workspace/scriped_pipeline/testing.jar '
     }
-     stage('ContinuousDelivery')
+    stage('continous deploy')
     {
-        input message: 'Waiting for Approval from the DM', submitter: 'Srinivas'
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.13.206:/var/lib/tomcat8/webapps/prodenv.war'
+        deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.29.52:8080')], contextPath: 'prodapp', war: '**/*.war'
     }
-    
-    
 }
 
