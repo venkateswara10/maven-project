@@ -16,6 +16,8 @@ node {
     stage('continous deploy')
     {
         deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.29.52:8080')], contextPath: 'prodapp', war: '**/*.war'
+        sh 'echo deployed to tomcat'
+        
     }
 }
 
