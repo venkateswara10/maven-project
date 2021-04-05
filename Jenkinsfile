@@ -19,10 +19,6 @@ node {
         
         
     }
-     stage('email notification')
-    {
-        mail bcc: '', body: '''hello
-job is build''', cc: '', from: '', replyTo: '', subject: 'jenkins-job', to: 'priyanjali.soma@gmail.com'
-    }
+    
 }
 
