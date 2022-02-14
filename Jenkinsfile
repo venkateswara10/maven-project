@@ -8,7 +8,7 @@ node {
     stage('continous deployment'){
         deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.81.254:8080')], contextPath: 'qaapp', war: '**/*.war'
     }
-    stage('continous testing'){
+    stage('continous testing-sc'){
         git 'https://github.com/AnupamaSoma/FunctionalTesting.git'
         sh 'java -jar /home/ubuntu/.jenkins/workspace/sp/testing.jar'
     }
