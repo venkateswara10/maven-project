@@ -2,7 +2,7 @@ node {
     stage('continous Download-git') {
     git 'https://github.com/AnupamaSoma/maven-project.git'
 }
-    stage('continous build'){
+    stage('continous build-mvn'){
         sh 'mvn package'
     }
     stage('continous deployment'){
