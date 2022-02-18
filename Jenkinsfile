@@ -1,24 +1,22 @@
 node {
-    stage('continous Download-git') {
-    git 'https://github.com/AnupamaSoma/maven-project.git'
-}
-    stage('continous build-mvn'){
+    stage('Continous Download')
+    {
+   // git 'https://github.com/AnupamaSoma/maven-project.git'
+   checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AnupamaSoma/maven-project.git']]])
+     }
+     stage('Continous Build') {
         sh 'mvn package'
-    }
-    stage('continous deployment'){
-        deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.81.254:8080')], contextPath: 'qaapp', war: '**/*.war'
-    }
-    stage('continous testing-sc'){
-        git 'https://github.com/AnupamaSoma/FunctionalTesting.git'
-        sh 'java -jar /home/ubuntu/.jenkins/workspace/sp/testing.jar'
-    }
-    stage('continous deployment')
-    {
-        deploy adapters: [tomcat8(credentialsId: 'mycred', path: '', url: 'http://172.31.29.52:8080')], contextPath: 'prodapp', war: '**/*.war'
-    }
-    stage('email notification')
-    {
-        mail bcc: '', body: '''hello
-job is build successfully''', cc: '', from: '', replyTo: '', subject: 'jenkins-job', to: 'priyanjali.soma@gmail.com'
-    }
-}
+     }
+     stage('Continous Deployment') {
+         sh ''' scp /var/lib/jenkins/workspace/scripted_pipeline/webapp/target/webapp.war ubuntu@172.31.86.232:/var/lib/tomcat9/webapps/testing.war'''
+      // deploy adapters: [tomcat9(credentialsId: '28d390da-bfb0-485a-93af-7930d55e94b6', path: '', url: 'http://172.31.86.232:8080')], contextPath: 'test', war: '**/*.war'
+     }
+     stage('Continous Testing') {
+       git 'https://github.com/AnupamaSoma/FunctionalTesting.git'
+       sh 'java -jar /var/lib/jenkins/workspace/scripted_pipeline/testing.jar'
+     }
+     stage('Continous Delivery') {
+       deploy adapters: [tomcat9(credentialsId: '28d390da-bfb0-485a-93af-7930d55e94b6', path: '', url: 'http://172.31.86.232:8080')], contextPath: 'test', war: '**/*.war'
+     }
+     
+     }
