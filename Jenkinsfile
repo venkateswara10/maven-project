@@ -7,7 +7,7 @@ node {
      stage('Continous') {
         sh 'mvn package'
      }
-     stage('Continous Deployment') {
+     stage('Deployment') {
          sh ''' scp /var/lib/jenkins/workspace/scripted_pipeline/webapp/target/webapp.war ubuntu@172.31.86.232:/var/lib/tomcat9/webapps/testing.war'''
       // deploy adapters: [tomcat9(credentialsId: '28d390da-bfb0-485a-93af-7930d55e94b6', path: '', url: 'http://172.31.86.232:8080')], contextPath: 'test', war: '**/*.war'
      }
