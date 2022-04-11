@@ -1,5 +1,5 @@
 node {
-    stage('Continous Download')
+    stage('Continou')
     {
    // git 'https://github.com/AnupamaSoma/maven-project.git'
    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AnupamaSoma/maven-project.git']]])
