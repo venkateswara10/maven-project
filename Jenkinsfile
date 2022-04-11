@@ -4,7 +4,7 @@ node {
    // git 'https://github.com/AnupamaSoma/maven-project.git'
    checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AnupamaSoma/maven-project.git']]])
      }
-     stage('Continous Build') {
+     stage('Continous') {
         sh 'mvn package'
      }
      stage('Continous Deployment') {
