@@ -24,7 +24,7 @@ pipeline
                 sh 'scp /var/lib/jenkins/workspace/Declarative_Pipeline/webapp/target/webapp.war ubuntu@10.10.10.32:/var/lib/tomcat8/webapps/qaenv.war'
             }
         }
-        stage('ContTesting')
+        stage('ContTesting  jjj')
         {
             steps
             {
