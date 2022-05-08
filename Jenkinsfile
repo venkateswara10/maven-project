@@ -1,4 +1,8 @@
 node {
+    parameters {
+  string defaultValue: 'dev', name: 'ENV'
+  // choice choices: ['L1', 'L2', 'L3'], name: 'Level'
+   }
    stage('git checkout') {
     checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AnupamaSoma/maven-project.git']]])
     }
@@ -22,5 +26,7 @@ stage('prod deployment')
 stage('email notification')
 {
     mail bcc: '', body: 'Build is success', cc: '', from: '', replyTo: '', subject: 'Jenkins build Info', to: 'priyanjali.soma@gmail.com'
+echo "${params.ENV}"
+    
 }
 }
