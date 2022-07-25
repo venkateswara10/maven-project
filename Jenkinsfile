@@ -27,6 +27,7 @@ stage('email notification')
 {
     mail bcc: '', body: 'Build is success', cc: '', from: '', replyTo: '', subject: 'Jenkins build Info', to: 'priyanjali.soma@gmail.com'
 echo "${params.ENV}"
+    echo "test"
     
 }
 }
